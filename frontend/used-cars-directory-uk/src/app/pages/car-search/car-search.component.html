@@ -1,0 +1,143 @@
+<nav class="navbar">
+  <div class="navbar-brand">Used Cars Directory UK</div>
+  <div class="navbar-actions">
+    <a [routerLink]="['/my-cars']" class="my-cars-button">My Cars</a>
+    <button *ngIf="isAuthenticated()" class="logout-button" (click)="logout()">Logout</button>
+    <button *ngIf="!isAuthenticated()" class="login-button" (click)="navigateToLogin()">Login</button>
+  </div>
+</nav>
+
+<h1 class="header">Search Directory</h1>
+<div class="filters-container">
+  <div class="filters">
+    <!-- Row 1: Centered Make, Model -->
+    <div class="filter-group centered-filter-group" style="grid-column: span 2;">
+      <label for="make">Make:</label>
+      <select id="make" [(ngModel)]="filters.make" (change)="onMakeChange()">
+        <option value="">All</option>
+        <option *ngFor="let value of distinctValues.make" [value]="value.value">
+          {{ value.value }} ({{ value.count }})
+        </option>
+      </select>
+    </div>
+    <div class="filter-group centered-filter-group" style="grid-column: span 2;">
+      <label for="model">Model:</label>
+      <select id="model" [(ngModel)]="filters.model" (change)="onModelChange()" [disabled]="!filters.make">
+        <option value="">All</option>
+        <option *ngFor="let value of distinctValues.model" [value]="value.value">
+          {{ value.value }} ({{ value.count }})
+        </option>
+      </select>
+    </div>
+
+    <!-- Row 2: Sliders -->
+    <div class="filter-group slider-group" style="grid-column: span 4;">
+      <label for="price_range">Price Range:</label>
+      <ngx-slider
+        [(value)]="filters.price_min"
+        [(highValue)]="filters.price_max"
+        [options]="priceOptions"
+        (userChangeEnd)="onFilterChange()"
+      ></ngx-slider>
+    </div>
+    <div class="filter-group slider-group" style="grid-column: span 4;">
+      <label for="mileage_range">Mileage Range:</label>
+      <ngx-slider
+        [(value)]="filters.mileage_min"
+        [(highValue)]="filters.mileage_max"
+        [options]="mileageOptions"
+        (userChangeEnd)="onFilterChange()"
+      ></ngx-slider>
+    </div>
+    <div class="filter-group slider-group" style="grid-column: span 4;">
+      <label for="year_range">Year Range:</label>
+      <ngx-slider
+        [(value)]="filters.registration_year_min"
+        [(highValue)]="filters.registration_year_max"
+        [options]="yearOptions"
+        (userChangeEnd)="onFilterChange()"
+      ></ngx-slider>
+    </div>
+
+    <!-- Row 3: Body Type, Engine, Gearbox -->
+    <div class="filter-group">
+      <label for="body_type">Body Type:</label>
+      <select id="body_type" [(ngModel)]="filters.body_type" (change)="onFilterChange()">
+        <option value="">All</option>
+        <option *ngFor="let value of distinctValues.body_type" [value]="value.value">
+          {{ value.value }} ({{ value.count }})
+        </option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="engine">Engine:</label>
+      <select id="engine" [(ngModel)]="filters.engine" (change)="onFilterChange()">
+        <option value="">All</option>
+        <option *ngFor="let value of distinctValues.engine" [value]="value.value">
+          {{ value.value }} ({{ value.count }})
+        </option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="gearbox">Gearbox:</label>
+      <select id="gearbox" [(ngModel)]="filters.gearbox" (change)="onFilterChange()">
+        <option value="">All</option>
+        <option *ngFor="let value of distinctValues.gearbox" [value]="value.value">
+          {{ value.value }} ({{ value.count }})
+        </option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="doors">Doors:</label>
+      <select id="doors" [(ngModel)]="filters.doors" (change)="onFilterChange()">
+        <option value="">All</option>
+        <option *ngFor="let value of distinctValues.doors" [value]="value.value">
+          {{ value.value }} ({{ value.count }})
+        </option>
+      </select>
+    </div>
+
+    <!-- Row 4: Centered Seats, Colour, Fuel Type, Emission Class -->
+    <div class="filter-group centered-filter-group" style="grid-column: span 2;">
+      <label for="seats">Seats:</label>
+      <select id="seats" [(ngModel)]="filters.seats" (change)="onFilterChange()">
+        <option value="">All</option>
+        <option *ngFor="let value of distinctValues.seats" [value]="value.value">
+          {{ value.value }} ({{ value.count }})
+        </option>
+      </select>
+    </div>
+    <div class="filter-group centered-filter-group" style="grid-column: span 2;">
+      <label for="colour">Colour:</label>
+      <select id="colour" [(ngModel)]="filters.colour" (change)="onFilterChange()">
+        <option value="">All</option>
+        <option *ngFor="let value of distinctValues.colour" [value]="value.value">
+          {{ value.value }} ({{ value.count }})
+        </option>
+      </select>
+    </div>
+    <div class="filter-group centered-filter-group" style="grid-column: span 2;">
+      <label for="fuel_type">Fuel Type:</label>
+      <select id="fuel_type" [(ngModel)]="filters.fuel_type" (change)="onFilterChange()">
+        <option value="">All</option>
+        <option *ngFor="let value of distinctValues.fuel_type" [value]="value.value">
+          {{ value.value }} ({{ value.count }})
+        </option>
+      </select>
+    </div>
+    <div class="filter-group centered-filter-group" style="grid-column: span 2;">
+      <label for="emission_class">Emission Class:</label>
+      <select id="emission_class" [(ngModel)]="filters.emission_class" (change)="onFilterChange()">
+        <option value="">All</option>
+        <option *ngFor="let value of distinctValues.emission_class" [value]="value.value">
+          {{ value.value }} ({{ value.count }})
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Search Button -->
+  <div class="search-button-container">
+    <button class="search-button" (click)="onSearch()">Search ({{ totalCars }} cars)</button>
+  </div>
+</div>

@@ -1,0 +1,163 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <span class="navbar-title" (click)="navigateToCarList()">Used Cars Directory UK</span>
+  </div>
+  <div class="navbar-actions">
+    <a [routerLink]="['/cars']" class="back-button">Back to List</a>
+    <a [routerLink]="['/my-cars']" class="my-cars-button">My Cars</a>
+    <button *ngIf="isAuthenticated()" class="logout-button" (click)="logout()">Logout</button>
+    <button *ngIf="!isAuthenticated()" class="login-button" (click)="navigateToLogin()">Login</button>
+  </div>
+</nav>
+
+<h1 class="page-title">{{ isEditMode ? 'Edit Car' : 'Add Car' }}</h1>
+<div class="container">
+  <div class="car-details">
+    <form (ngSubmit)="saveCar()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="registration_number">Registration:</label>
+          <input type="text" id="registration_number" [(ngModel)]="car.registration_number" name="registration_number" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="make">Make:</label>
+          <input type="text" id="make" [(ngModel)]="car.make" name="make" readonly>
+        </div>
+        <div class="form-group">
+          <label for="model">Model:</label>
+          <input type="text" id="model" [(ngModel)]="car.model" name="model" readonly>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input type="number" id="price" [(ngModel)]="car.price" name="price" required>
+        </div>
+        <div class="form-group">
+          <label for="mileage">Mileage:</label>
+          <input type="number" id="mileage" [(ngModel)]="car.mileage" name="mileage" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="registration_year">Registration Year:</label>
+          <input type="number" id="registration_year" [(ngModel)]="car.registration_year" name="registration_year" required>
+        </div>
+        <div class="form-group">
+          <label for="fuel_type">Fuel Type:</label>
+          <select id="fuel_type" [(ngModel)]="car.fuel_type" name="fuel_type" required>
+            <option *ngFor="let value of distinctValues.fuel_type" [value]="value.value">{{ value.value }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="body_type">Body Type:</label>
+          <select id="body_type" [(ngModel)]="car.body_type" name="body_type" required>
+            <option *ngFor="let value of distinctValues.body_type" [value]="value.value">{{ value.value }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="engine">Engine:</label>
+          <select id="engine" [(ngModel)]="car.engine" name="engine" required>
+            <option *ngFor="let value of distinctValues.engine" [value]="value.value">{{ value.value }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="gearbox">Gearbox:</label>
+          <select id="gearbox" [(ngModel)]="car.gearbox" name="gearbox" required>
+            <option *ngFor="let value of distinctValues.gearbox" [value]="value.value">{{ value.value }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="doors">Doors:</label>
+          <input type="number" id="doors" [(ngModel)]="car.doors" name="doors" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="seats">Seats:</label>
+          <input type="number" id="seats" [(ngModel)]="car.seats" name="seats" required>
+        </div>
+        <div class="form-group">
+          <label for="colour">Colour:</label>
+          <select id="colour" [(ngModel)]="car.colour" name="colour" required>
+            <option *ngFor="let value of distinctValues.colour" [value]="value.value">{{ value.value }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="emission_class">Emission Class:</label>
+          <select id="emission_class" [(ngModel)]="car.emission_class" name="emission_class" required>
+            <option *ngFor="let value of distinctValues.emission_class" [value]="value.value">{{ value.value }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="purchase_date">Purchase Date:</label>
+          <input type="date" id="purchase_date" [(ngModel)]="car.purchase_date" name="purchase_date" required>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="save-button">{{ isEditMode ? 'Update' : 'Add Car' }}</button>
+        <button *ngIf="isEditMode" type="button" class="delete-button" (click)="deleteCar()">Delete Car</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Service History Section -->
+  <div *ngIf="isCarAdded">
+    <h2>Service History</h2>
+    <div *ngFor="let service of car.services; let i = index" class="form-row">
+      <div class="form-group">
+        <label for="service_date_{{i}}">Service Date:</label>
+        <input type="date" id="service_date_{{i}}" [(ngModel)]="service.service_date" name="service_date_{{i}}" required>
+      </div>
+      <div class="form-group">
+        <label for="service_description_{{i}}">Description:</label>
+        <input type="text" id="service_description_{{i}}" [(ngModel)]="service.service_description" name="service_description_{{i}}" required>
+      </div>
+      <button type="button" (click)="removeService(i)">Remove</button>
+      <button *ngIf="service._id" type="button" (click)="updateService(service._id, service)">Update Service</button>
+      <button *ngIf="!service._id" type="button" (click)="saveService(i)">Save Service</button>
+      <button *ngIf="service._id" type="button" class="delete-button" (click)="deleteService(service._id)">Delete Service</button>
+    </div>
+    <button type="button" (click)="addService()">Add Service</button>
+  </div>
+
+  <!-- Owner History Section -->
+  <div *ngIf="isCarAdded">
+    <h2>Owner History</h2>
+    <div *ngFor="let owner of car.owners; let i = index" class="form-row">
+      <div class="form-group">
+        <label for="owner_name_{{i}}">Owner Name:</label>
+        <input type="text" id="owner_name_{{i}}" [(ngModel)]="owner.owner_name" name="owner_name_{{i}}" required>
+      </div>
+      <div class="form-group">
+        <label for="purchase_date_{{i}}">Purchase Date:</label>
+        <input type="date" id="purchase_date_{{i}}" [(ngModel)]="owner.purchase_date" name="purchase_date_{{i}}" required>
+      </div>
+      <div class="form-group">
+        <label for="sale_price_{{i}}">Sale Price:</label>
+        <input type="number" id="sale_price_{{i}}" [(ngModel)]="owner.sale_price" name="sale_price_{{i}}">
+      </div>
+      <div class="form-group">
+        <label for="sold_date_{{i}}">Sold Date:</label>
+        <input type="date" id="sold_date_{{i}}" [(ngModel)]="owner.sold_date" name="sold_date_{{i}}">
+      </div>
+      <button type="button" (click)="removeOwner(i)">Remove</button>
+      <button *ngIf="owner._id" type="button" (click)="updateOwner(owner._id, owner)">Update Owner</button>
+      <button *ngIf="!owner._id" type="button" (click)="saveOwner(i)">Save Owner</button>
+      <button *ngIf="owner._id" type="button" class="delete-button" (click)="deleteOwner(owner._id)">Delete Owner</button>
+    </div>
+    <button type="button" (click)="addOwner()">Add Owner</button>
+  </div>
+
+  <div class="centered-done-button">
+    <button type="button" class="done-button" (click)="done()">Done</button>
+  </div>
+</div>

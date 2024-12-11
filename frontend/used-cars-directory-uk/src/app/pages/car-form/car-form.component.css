@@ -1,0 +1,199 @@
+/* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #007bff;
+  color: white;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-title {
+  cursor: pointer;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+}
+
+.back-button {
+  padding: 0.5rem 1rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.back-button:hover {
+  background-color: #218838;
+}
+
+/* Container styles */
+.container {
+  max-width: 1000px; /* Increase the max-width to make the form wider */
+  margin: 2rem auto;
+  padding: 1.5rem; /* Increase padding for better spacing */
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.page-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+/* Form styles */
+.car-details form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.form-group {
+  flex: 1;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.save-button,
+.done-button,
+.delete-button {
+  padding: 1rem 2rem; /* Ensure all buttons have the same padding */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 1.25rem; /* Ensure all buttons have the same font size */
+  transition: background-color 0.3s ease;
+  margin-right: 1rem;
+}
+
+.save-button:hover,
+.done-button:hover,
+.delete-button:hover {
+  background-color: #0056b3;
+}
+
+.done-button {
+  background-color: #28a745;
+  margin-right: 0; /* Remove the right margin for the last button */
+}
+
+.done-button:hover {
+  background-color: #218838;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+button[type="button"] {
+  padding: 0.5rem 1rem;
+  background-color: #e0172b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+button[type="button"]:hover {
+  background-color: #c82333;
+}
+
+.disabled-section {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.centered-done-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.my-cars-button {
+  padding: 0.5rem 1rem;
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 1rem;
+  margin-left: 1rem;
+}
+
+.my-cars-button:hover {
+  background-color: #138496;
+}
+
+.logout-button,
+.login-button {
+  padding: 0.5rem 1rem;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 1rem;
+  margin-left: 1rem;
+}
+
+.logout-button:hover,
+.login-button:hover {
+  background-color: #c82333;
+}

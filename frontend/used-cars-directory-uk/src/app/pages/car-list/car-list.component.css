@@ -1,0 +1,218 @@
+/* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #007bff;
+  color: white;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-title {
+  cursor: pointer;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+}
+
+.add-car-button {
+  padding: 0.5rem 1rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.add-car-button:hover {
+  background-color: #218838;
+}
+
+/* Container styles */
+.container {
+  display: flex;
+  min-height: 100vh; /* Ensure the container takes the full height of the viewport */
+}
+
+.sidebar {
+  width: 250px;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-right: 1px solid #dee2e6;
+  transition: transform 0.3s ease;
+  position: relative; /* Add relative positioning */
+  flex-shrink: 0; /* Prevent the sidebar from shrinking */
+}
+
+.sidebar.hidden {
+  transform: translateX(-100%);
+}
+
+.main-content {
+  flex: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column; /* Ensure the main content is a column layout */
+}
+
+.sort-group {
+  margin-bottom: 1rem;
+}
+
+.sort-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.sort-group select {
+  width: 100%; /* Ensure the select elements take full width */
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto; /* Push the pagination controls to the bottom */
+}
+
+.pagination-button {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.pagination-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-controls span {
+  margin: 0 0.5rem;
+}
+
+.toggle-sidebar-button {
+  position: absolute;
+  top: 50%;
+  right: -15px; /* Position the button outside the sidebar */
+  transform: translateY(-50%);
+  padding: 0.5rem 1rem;
+  height: 80px;
+  width: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1000;
+  writing-mode: vertical-rl; /* Rotate the text vertically */
+  text-orientation: mixed; /* Ensure the text is readable */
+  text-align: center;
+}
+
+.toggle-sidebar-button:hover {
+  background-color: #0056b3;
+}
+
+.search-button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
+
+/* Car card styles */
+.car-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.car-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.car-card h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.car-card p {
+  margin: 0.25rem 0;
+}
+
+.car-card .price {
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* Center the page title */
+.page-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.my-cars-button {
+  padding: 0.5rem 1rem;
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 1rem;
+  margin-left: 1rem;
+}
+
+.my-cars-button:hover {
+  background-color: #138496;
+}
+
+.logout-button,
+.login-button {
+  padding: 0.5rem 1rem;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 1rem;
+  margin-left: 1rem;
+}
+
+.logout-button:hover,
+.login-button:hover {
+  background-color: #c82333;
+}

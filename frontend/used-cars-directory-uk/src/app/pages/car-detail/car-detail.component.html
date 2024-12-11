@@ -1,0 +1,116 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <span class="navbar-title" (click)="navigateToCarList()">Used Cars Directory UK</span>
+  </div>
+  <div class="navbar-actions">
+    <a [routerLink]="['/cars']" class="back-button">Back to List</a>
+    <a [routerLink]="['/my-cars']" class="my-cars-button">My Cars</a>
+    <button *ngIf="isAuthenticated()" class="logout-button" (click)="logout()">Logout</button>
+    <button *ngIf="!isAuthenticated()" class="login-button" (click)="navigateToLogin()">Login</button>
+  </div>
+
+</nav>
+
+<h1 class="page-title">Car Details</h1>
+<div class="container">
+  <div *ngIf="car" class="car-details">
+    <form>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="title">Title:</label>
+          <input type="text" id="title" [(ngModel)]="car.title" name="title" disabled>
+        </div>
+        <div class="form-group">
+          <label for="registration_year">Year:</label>
+          <input type="number" id="registration_year" [(ngModel)]="car.registration_year" name="registration_year" disabled>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="mileage">Mileage:</label>
+          <input type="number" id="mileage" [(ngModel)]="car.mileage" name="mileage" disabled>
+        </div>
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input type="number" id="price" [(ngModel)]="car.price" name="price" disabled>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fuel_type">Fuel Type:</label>
+          <input type="text" id="fuel_type" [(ngModel)]="car.fuel_type" name="fuel_type" disabled>
+        </div>
+        <div class="form-group">
+          <label for="body_type">Body Type:</label>
+          <input type="text" id="body_type" [(ngModel)]="car.body_type" name="body_type" disabled>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="engine">Engine:</label>
+          <input type="text" id="engine" [(ngModel)]="car.engine" name="engine" disabled>
+        </div>
+        <div class="form-group">
+          <label for="gearbox">Gearbox:</label>
+          <input type="text" id="gearbox" [(ngModel)]="car.gearbox" name="gearbox" disabled>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="doors">Doors:</label>
+          <input type="number" id="doors" [(ngModel)]="car.doors" name="doors" disabled>
+        </div>
+        <div class="form-group">
+          <label for="seats">Seats:</label>
+          <input type="number" id="seats" [(ngModel)]="car.seats" name="seats" disabled>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="colour">Colour:</label>
+          <input type="text" id="colour" [(ngModel)]="car.colour" name="colour" disabled>
+        </div>
+        <div class="form-group">
+          <label for="emission_class">Emission Class:</label>
+          <input type="text" id="emission_class" [(ngModel)]="car.emission_class" name="emission_class" disabled>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="current_owner">Current Owner:</label>
+          <input type="text" id="current_owner" [(ngModel)]="car.current_owner.username" name="current_owner" disabled>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Ownership History Section -->
+  <h2>Ownership History</h2>
+  <div *ngIf="ownershipHistory.length > 0; else noOwnershipHistory">
+    <div *ngFor="let owner of ownershipHistory" class="history-item">
+      <p><strong>Owner Name:</strong> {{ owner.owner_name }}</p>
+      <p><strong>Purchase Date:</strong> {{ owner.purchase_date }}</p>
+      <p><strong>Sale Price:</strong> £{{ owner.sale_price }}</p>
+      <p><strong>Sold Date:</strong> {{ owner.sold_date }}</p>
+    </div>
+  </div>
+  <ng-template #noOwnershipHistory>
+    <p>No ownership history found.</p>
+  </ng-template>
+
+  <!-- Service History Section -->
+  <h2>Service History</h2>
+  <div *ngIf="serviceHistory.length > 0; else noServiceHistory">
+    <div *ngFor="let service of serviceHistory" class="history-item">
+      <p><strong>Service Date:</strong> {{ service.service_date }}</p>
+      <p><strong>Description:</strong> {{ service.service_description }}</p>
+    </div>
+  </div>
+  <ng-template #noServiceHistory>
+    <p>No service history found.</p>
+  </ng-template>
+
+  <div class="form-actions">
+    <a [routerLink]="['/car-form', car._id]" class="edit-button">Edit</a>
+  </div>
+</div>
