@@ -20,19 +20,19 @@ export class CarService {
 
   addCar(carData: any): Observable<any> {
     const token = localStorage.getItem('access_token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : new HttpHeaders();
     return this.http.post<any>(this.apiUrl, carData, { headers });
   }
 
   updateCar(carId: string, carData: any): Observable<any> {
     const token = localStorage.getItem('access_token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : new HttpHeaders();
     return this.http.put<any>(`${this.apiUrl}/${carId}`, carData, { headers });
   }
 
   deleteCar(carId: string): Observable<void> {
     const token = localStorage.getItem('access_token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : new HttpHeaders();
     return this.http.delete<void>(`${this.apiUrl}/${carId}`, { headers });
   }
 
@@ -42,7 +42,7 @@ export class CarService {
 
   getMyCars(page: number, limit: number): Observable<any> {
     const token = localStorage.getItem('access_token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : new HttpHeaders();
     let params = new HttpParams()
       .set('page', page.toString())
       .set('limit', limit.toString());

@@ -8,14 +8,13 @@ export class FilterService {
   constructor(private carService: CarService) {}
 
   getDistinctValuesWithCount(cars: any[], field: string): any[] {
-    const counts = cars.reduce((acc, car) => {
-      const value = car[field];
-      if (value !== undefined && value !== null) {
-        acc[value] = (acc[value] || 0) + 1;
-      }
+    const values = cars.map(car => car[field]);
+    const counts = values.reduce((acc, value) => {
+      acc[value] = (acc[value] || 0) + 1;
       return acc;
     }, {});
-    return Object.keys(counts).map(key => ({ value: key, count: counts[key] }));
+    const distinctValues = Object.keys(counts).map(key => ({ value: key, count: counts[key] }));
+    return distinctValues.sort((a, b) => a.value.localeCompare(b.value)); // Sort alphabetically
   }
 
   getDistinctModelsWithCount(cars: any[], make: string): any[] {
@@ -48,10 +47,12 @@ export class FilterService {
         colour: this.getDistinctValuesWithCount(response.cars, 'colour'),
         emission_class: this.getDistinctValuesWithCount(response.cars, 'emission_class'),
         make: this.getDistinctValuesWithCount(response.cars, 'make'),
-        model: this.getDistinctModelsWithCount(response.cars, filters.make),
+        model: this.getDistinctModelsWithCount(response.cars, searchParams.make),
         doors: this.getDistinctValuesWithCount(response.cars, 'doors'),
         seats: this.getDistinctValuesWithCount(response.cars, 'seats')
       };
+
+      console.log('Fetched distinct values:', distinctValues);
 
       // Ensure current filter values are included with a count of 0 if not present
       Object.keys(filters).forEach(key => {

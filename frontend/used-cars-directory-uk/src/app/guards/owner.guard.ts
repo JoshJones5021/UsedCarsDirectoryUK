@@ -1,44 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { CarService } from '../services/car.service';
 import { map, catchError } from 'rxjs/operators';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
-
-  canActivate(): boolean {
-    if (this.authService.isAuthenticated()) {
-      return true;
-    } else {
-      this.router.navigate(['/login']);
-      return false;
-    }
-  }
-}
-
-@Injectable({
-  providedIn: 'root'
-})
-export class AdminGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
-
-  canActivate(): boolean {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      const decodedToken = this.authService.jwtHelper.decodeToken(token);
-      if (decodedToken && decodedToken.role === 'admin') {
-        return true;
-      }
-    }
-    this.router.navigate(['/login']);
-    return false;
-  }
-}
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +28,10 @@ export class OwnerGuard implements CanActivate {
     return this.carService.getCar(carId).pipe(
       map(car => {
         const currentUser = this.authService.getCurrentUser();
-        if (car.current_owner.user_id === currentUser.user_id || currentUser.role === 'admin') {
+        console.log("test", currentUser);
+        console.log("car", car); // Add logging to verify the structure of the car object
+        if (currentUser && car.current_owner && car.current_owner.user_id === currentUser.user_id) {
+          console.log("success", currentUser);
           return true;
         } else {
           this.router.navigate(['/cars']);

@@ -27,7 +27,8 @@ export class LoginRegisterComponent {
   }
 
   login(): void {
-    this.authService.login(this.email, this.password).subscribe(
+    const credentials = { email: this.email, password: this.password };
+    this.authService.login(credentials).subscribe(
       response => {
         localStorage.setItem('access_token', response.access_token);
         this.router.navigate(['/search']); // Navigate to the car search page
