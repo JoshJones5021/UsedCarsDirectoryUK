@@ -1,23 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CarListComponent } from './car-list.component';
+import { MyCarsComponent } from './my-cars.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
 import { CarService } from '../../services/car.service';
-import { SearchService } from '../../services/search.service';
-import { FilterService } from '../../services/filter.service';
 import { AuthService } from '../../services/auth.service';
-import { FormsModule } from '@angular/forms';
+import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
-describe('CarListComponent', () => {
-  let component: CarListComponent;
-  let fixture: ComponentFixture<CarListComponent>;
+describe('MyCarsComponent', () => {
+  let component: MyCarsComponent;
+  let fixture: ComponentFixture<MyCarsComponent>;
   let carService: CarService;
   let authService: AuthService;
   let router: Router;
 
-  const mockCars = {
+  const mockCarsResponse = {
     cars: [
       {
         _id: '1',
@@ -64,30 +61,21 @@ describe('CarListComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        FormsModule,
-        CarListComponent // Import the standalone component
+        MyCarsComponent // Import the standalone component
       ],
       providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            queryParams: of({})
-          }
-        },
         CarService,
-        SearchService,
-        FilterService,
         AuthService
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CarListComponent);
+    fixture = TestBed.createComponent(MyCarsComponent);
     component = fixture.componentInstance;
     carService = TestBed.inject(CarService);
     authService = TestBed.inject(AuthService);
     router = TestBed.inject(Router);
 
-    spyOn(carService, 'searchCars').and.returnValue(of(mockCars));
+    spyOn(carService, 'getMyCars').and.returnValue(of(mockCarsResponse));
     fixture.detectChanges();
   });
 
@@ -95,37 +83,15 @@ describe('CarListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fetch cars on init', () => {
+  it('should fetch user cars on init', () => {
     component.ngOnInit();
-    expect(carService.searchCars).toHaveBeenCalled();
+    expect(carService.getMyCars).toHaveBeenCalledWith(component.page, component.limit);
     expect(component.cars.length).toBe(2);
     expect(component.total).toBe(2);
-  });
-
-  it('should fetch cars with search parameters', () => {
-    const searchParams = { make: 'Test Make' };
-    component.fetchCars(searchParams);
-    expect(carService.searchCars).toHaveBeenCalledWith(jasmine.objectContaining(searchParams));
-    expect(component.cars.length).toBe(2);
-    expect(component.total).toBe(2);
-  });
-
-  it('should navigate to the next page', () => {
-    component.page = 1;
-    component.nextPage();
-    expect(component.page).toBe(2);
-    expect(carService.searchCars).toHaveBeenCalledWith(jasmine.objectContaining({ page: 2, limit: component.limit }));
-  });
-
-  it('should navigate to the previous page', () => {
-    component.page = 2;
-    component.prevPage();
-    expect(component.page).toBe(1);
-    expect(carService.searchCars).toHaveBeenCalledWith(jasmine.objectContaining({ page: 1, limit: component.limit }));
   });
 
   it('should display car details', () => {
-    component.cars = mockCars.cars;
+    component.cars = mockCarsResponse.cars;
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement;

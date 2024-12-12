@@ -13,7 +13,8 @@
 <div class="container">
   <div *ngIf="cars.length > 0; else noCars">
     <div class="car-list">
-      <a class="car-card" *ngFor="let car of cars" [routerLink]="['/car-form', car._id]">
+      <!-- Update the router link to navigate to the car details page -->
+      <a class="car-card" *ngFor="let car of cars" [routerLink]="['/cars', car._id]">
         <h2>{{ car.title }}</h2>
         <p>Year: {{ car.registration_year }}</p>
         <p>Mileage: {{ car.mileage }} miles</p>
